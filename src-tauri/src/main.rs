@@ -1,4 +1,7 @@
-#![cfg_attr(all(not(debug_assertions), target_os = "windows"),windows_subsystem = "windows")]
+#![cfg_attr(
+  all(not(debug_assertions), target_os = "windows"),
+  windows_subsystem = "windows"
+)]
 
 use tauri::{
   generate_handler,
@@ -9,11 +12,7 @@ mod api;
 mod routers;
 mod service;
 mod http;
-use crate::{
-  service::{
-    ipc::{hello,is_app}
-  }
-};
+use crate::service::ipc::{hello,is_app};
 
 fn main() {
   let context = generate_context!();
