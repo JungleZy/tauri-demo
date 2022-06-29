@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script type="module">
+      import { invoke } from '@tauri-apps/api'
+
+      const jss = [
+        { t: 0, d: '/cdn/luckysheet/plugins/css/pluginsCss.css' },
+        { t: 0, d: '/cdn/luckysheet/plugins/plugins.css' },
+        { t: 0, d: '/cdn/luckysheet/css/luckysheet.css' },
+        { t: 0, d: '/cdn/luckysheet/assets/iconfont/iconfont.css' },
+        { t: 1, d: '/cdn/luckysheet/plugins/js/plugin.js' },
+        { t: 1, d: '/cdn/luckysheet/luckysheet.umd.js' },
+        { t: 1, d: '/cdn/luckyexcel/luckyexcel.umd.js' },
+        { t: 1, d: '/cdn/dayjs/dayjs.min.js' },
+        { t: 1, d: '/cdn/animejs/anime.min.js' }
+      ]
+
+      if (window.__TAURI_IPC__ !== undefined) {
+        invoke('is_app').then(res=>{
+          console.log(res)
+        })
+      } else {
+        window.httpUrl = '10.10.0.232:18001'
+        window.iconUrl =
+          'http://10.10.0.99:8000/api/file/getFile/icon/font/iconfont.js'
+        window.ueditorUrl = 'http://10.10.0.99:8003/ueditor'
+        window.fileUrl = 'http://10.10.0.99:8000/api/file/getFile'
+        window.uploadFileUrl = 'http://10.10.0.99:8000/api/file/upload'
+        initJS(jss)
+      }
+
+      function initJS(jss) {
+        for (let i = 0; i < jss.length; i++) {
+          if (jss[i].t === 1) {
+            let script = document.createElement('script')
+            script.type = 'text/javascript'
+            script.src = `${window.fileUrl}${jss[i].d}`
+            document.getElementsByTagName('head')[0].appendChild(script)
+          } else {
+            let link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.href = `${window.fileUrl}${jss[i].d}`
+            document.getElementsByTagName('head')[0].appendChild(link)
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
