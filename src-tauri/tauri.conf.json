@@ -48,8 +48,11 @@
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
         "timestampUrl": "",
-        "wix":{
-          "language":"zh-CN"
+        "webviewInstallMode": {
+          "type": "offlineInstaller"
+        },
+        "wix": {
+          "language": "zh-CN"
         }
       }
     },

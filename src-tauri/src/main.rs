@@ -18,7 +18,7 @@ fn main() {
   let context = generate_context!();
   Builder::default()
     .setup(|_| {
-      #[cfg(debug_assertions)]
+        // #[cfg(debug_assertions)]
         // app.get_window("main").unwrap().open_devtools();
         std::thread::spawn(|| {
           http::http_server::start();
